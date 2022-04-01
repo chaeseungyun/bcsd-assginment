@@ -15,6 +15,21 @@
       .inputwidth {
         width:300px;
       }
+      #grid_1 {
+        display: grid;
+        grid-template-columns: 20% 60% 20%;
+        grid-template-rows: 30% 60% 10%;
+      }
+      .pos1 {
+        grid-column-start: 1;
+      }
+      .pos2 {
+        grid-column-start: 3;
+      }
+      .pos3 {
+        grid-column-start: 2;
+        grid-row-start: 2;
+      }
     </style>
     <title>회원가입 화면</title>
 
@@ -24,47 +39,55 @@
     <span class="nav-link  nav-item disabled col-4">BCSD Assignment</span>
     <a class="nav-link nav-item col-4" href="signIn.html">sign in</a>
   </nav>
-  <div class="row justify-content-center">
+  <div class="row justify-content-center" style="border-bottom: 1px solid black;">
       <h1>회원가입</h1>
   </div>
+  <div id="grid_1">
+    <div class="pos1">
 
-  <form style="border-top:1px solid black;">
-    <div class="form-group row justify-content-center mt-2">
-      <label for="inputEmail3" class="col-form-label txtalign col-12 col-md-2">ID</label>
+    </div>
+    <form class="pos3">
+      <div class="form-group row justify-content-center mt-2">
+        <label for="inputEmail3" class="col-form-label txtalign col-12 col-md-2">ID</label>
+        <div>
+          <input type="text" class="form-control inputwidth col-12 col-md-10" id="inputEmail3" placeholder="ID">
+        </div>
+      </div>
+      <div class="form-group row justify-content-center">
+        <label for="inputPassword3" class="col-form-label txtalign col-12 col-md-2">Password</label>
+        <div>
+          <input type="password" class="form-control inputwidth col-12 col-md-10" id="inputPassword3" placeholder="Password">
+        </div>
+      </div>
+      <div class="form-group row justify-content-center mt-2">
+        <label for="inputName3" class="col-form-label txtalign col-12 col-md-2">Name</label>
+        <div>
+          <input type="text" class="form-control inputwidth col-12 col-md-10" id="inputName3" placeholder="Name">
+        </div>
+      </div>
+      <div class="form-group row justify-content-center mt-2">
+        <label for="inputNumber3" class="col-form-label txtalign col-12 col-md-2">Student Number</label>
+        <div>
+          <input type="number" class="form-control inputwidth col-12 col-md-10" id="inputNumber3" placeholder="Student Number">
+        </div>
+      </div>
+      <div class="form-group row justify-content-center mt-2">
+        <label for="inputDate3" class="col-form-label txtalign col-12 col-md-2">생년월일</label>
+        <div>
+          <input type="date" class="form-control inputwidth col-12 col-md-10" id="inputDate3">
+        </div>
+      </div>
+      <div class="form-group row justify-content-center">
+        <div class>
+          <button type="submit" class="btn btn-primary">Sign up</button>
+        </div>
+      </div>
       <div>
-        <input type="text" class="form-control inputwidth col-12 col-md-10" id="inputEmail3" placeholder="ID">
+
       </div>
-    </div>
-    <div class="form-group row justify-content-center">
-      <label for="inputPassword3" class="col-form-label txtalign col-12 col-md-2">Password</label>
-      <div>
-        <input type="password" class="form-control inputwidth col-12 col-md-10" id="inputPassword3" placeholder="Password">
-      </div>
-    </div>
-    <div class="form-group row justify-content-center mt-2">
-      <label for="inputName3" class="col-form-label txtalign col-12 col-md-2">Name</label>
-      <div>
-        <input type="text" class="form-control inputwidth col-12 col-md-10" id="inputName3" placeholder="Name">
-      </div>
-    </div>
-    <div class="form-group row justify-content-center mt-2">
-      <label for="inputNumber3" class="col-form-label txtalign col-12 col-md-2">Student Number</label>
-      <div>
-        <input type="number" class="form-control inputwidth col-12 col-md-10" id="inputNumber3" placeholder="Student Number">
-      </div>
-    </div>
-    <div class="form-group row justify-content-center mt-2">
-      <label for="inputDate3" class="col-form-label txtalign col-12 col-md-2">생년월일</label>
-      <div>
-        <input type="date" class="form-control inputwidth col-12 col-md-10" id="inputDate3">
-      </div>
-    </div>
-    <div class="form-group row justify-content-center">
-      <div class>
-        <button type="submit" class="btn btn-primary">Sign up</button>
-      </div>
-    </div>
-  </form>
+    </form>
+  </div>
+  
   </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
