@@ -8,24 +8,18 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
-     .txtalign {
+     .textalign {
         text-align: center;
       }
       .inputwidth {
         width:300px;
       }
-      #grid_1 {
+      #grid-form {
         display: grid;
         grid-template-columns: 20% 60% 20%;
         grid-template-rows: 50% 50%;
       }
-      .pos1 {
-        grid-column-start: 1;
-      }
-      .pos2 {
-        grid-column-start: 3;
-      }
-      .pos3 {
+      .pos {
         grid-column-start: 2;
         grid-row-start: 2;
       }
@@ -39,17 +33,16 @@
       <button type="button" class="btn btn-light"><a href="signUp.html">sign Up</a></button>
     </div>  
   </nav>
-<div id="grid_1">
-  <div class="pos1"></div>
-  <form class="pos3">
+<div id="grid-form">
+  <form class="pos">
     <div class="form-group row justify-content-center mt-2">
-      <label for="inputEmail3" class="col-form-label txtalign col-12 col-md-2">ID</label>
+      <label for="inputEmail3" class="col-form-label textalign col-12 col-md-2">ID</label>
       <div>
         <input type="text" class="form-control inputwidth col-12 col-md-10" id="inputEmail3" placeholder="ID">
       </div>
     </div>
     <div class="form-group row justify-content-center">
-      <label for="inputPassword3" class="col-form-label txtalign col-12 col-md-2">Password</label>
+      <label for="inputPassword3" class="col-form-label textalign col-12 col-md-2">Password</label>
       <div>
         <input type="password" class="form-control inputwidth col-12 col-md-10" id="inputPassword3" placeholder="Password">
       </div>
@@ -63,7 +56,6 @@
       <a href="signUp.html">계정이 없으신가요?</a>
     </div>
   </form>
-  <div class="pos2"></div>
 </div>
   
   </script>
