@@ -26,6 +26,7 @@
     </style>
     <title>로그인</title>
   </head>
+  <body>
   <nav class="navbar navbar-dark bg-primary justify-content-between">
     <span class="nav-item" style="color: white; font-size: 20px;">로그인</span>
     <div>
@@ -55,17 +56,39 @@
     <div class="row justify-content-center">
       <a href="signUp.html">계정이 없으신가요?</a>
     </div>
+    <div class="row justify-content-center">
+      <img id = "img" alt="image" width="200" height="200" src="question.jpg">
+    </div>
   </form>
 </div>
-  
 <script>
-  let a = document.getElementById('signin-check');
-  let b = document.getElementById('input-id').value;
-  let c = document.getElementById('input-password').value;
-  a.onclick = function aa() {
-    if(!b && !c)
-    alert('아이디, 비밀번호를 입력해주세요');
+  let inputBtn = document.getElementById('signin-check'); 
+  inputBtn.onclick = function aa() {
+    let inputId = document.getElementById('input-id').value;
+    let inputPw = document.getElementById('input-password').value;
+    if(!inputId||!inputPw)
+    {
+      alert("아이디 또는 비밀번호를 입력해주세요");
+    }
+    else if(inputId=='a1234'&&inputPw=='a1234'){
+      alert("로그인에 성공했습니다.");
+    }
+    else {
+      alert("아이디 또는 비밀번호를 확인하세요")
+    }
   }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+	axios.get('https://api.thecatapi.com/v1/images/search?size=full').then((response)=>
+		{
+			let img = document.getElementById('img');
+			img.src = response.data[0].url;
+			
+		} 	
+	).catch((Error)=>{
+    console.log(Error);
+})
 </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
