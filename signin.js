@@ -5,8 +5,8 @@ const inputPw = document.getElementById('input-password');
 const time = 60*60*72;
 let img = document.getElementById('img');
 
-let LoginState = 0;
-const LoginCount=`LoginCount`;
+let LoginState = 0; // 로그인 여부
+const LoginCount=`LoginCount`; // localStorage에 저장할 key값
 let currectId = 'a12345';
 let currectPw = 'a12345';
 
@@ -44,6 +44,7 @@ function cleanData() // 모든 스토리지, 쿠키 삭제
       deleteCookie(document.cookie.split('; ')[i]);
     }
     LoginState=0;
+    alert("로그아웃 되었습니다.");
   }
 }
 function failToLogIn() // 로그인 실패 카운트 및 오류 출력, 플래그 생성
@@ -112,7 +113,6 @@ SignInBtn.onclick = function LogIn()  // 로그인에 이벤트 추가
       alert("로그인에 성공했습니다.");
       inputId.value = "";
       inputPw.value = "";
-      LoginCount=0;
       LoginState=1;  
     }
   }
