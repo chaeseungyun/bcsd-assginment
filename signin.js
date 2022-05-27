@@ -1,6 +1,9 @@
-
+const SignInBtn = document.getElementById("signin-check");
+const inputId = document.getElementById("input-id");
+const time = 60*60*72;
 let img = document.getElementById('img');
 let LoginCount=0;
+
 SignInBtn.onclick = function checkIdPw() {
     inputId.value;
     let inputPw = document.getElementById('input-password').value;
@@ -22,6 +25,23 @@ SignInBtn.onclick = function checkIdPw() {
       alert("아이디 또는 비밀번호를 확인하세요")
     }
   }
+
+function blockSignIn(){
+    document.cookie = `flag=blockSignInflag; max-age=60*60;`;
+}
+function datamanagement() {
+    setCookie(inputId.value);
+    localStorage.setItem(`${inputId.value}_ID`,inputId.value);
+    sessionStorage.setItem(`${inputId.value}_ID`,inputId.value);
+}
+function setCookie(name){
+    document.cookie = `${name}_ID=${name};max-age=${time}`;
+}
+function deleteCookie(name){
+    document.cookie = `${name}_ID=${name};max-age=-1`;
+}
+
+SignInBtn.addEventListener("click",datamanagement);
 	axios.get('https://api.thecatapi.com/v1/images/search?size=full')
     .then((response)=>
 		{
