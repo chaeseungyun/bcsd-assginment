@@ -4,13 +4,12 @@ const inputId = document.getElementById("input-id");
 const inputPw = document.getElementById('input-password');
 const time = 60*60*72;
 let img = document.getElementById('img');
-let cookie = document.cookie.split(';');
-let Loginflag = 0;
-let LoginCount = 0;
+
+let LoginState = 0;
+const LoginCount=`LoginCount`;
 let currectId = 'a12345';
-let cureectPw = 'a12345';
-//console.log(cookie)
-console.log(cookie)
+let currectPw = 'a12345';
+
 axios.get('https://api.thecatapi.com/v1/images/search?size=full')
    .then((response)=>
 	{
@@ -19,15 +18,16 @@ axios.get('https://api.thecatapi.com/v1/images/search?size=full')
       .catch((Error)=>{
   console.log(Error);
   })
+
 function setCookie(name) // 쿠키를 저장하는 함수
 {
-    document.cookie = `${name}_ID=${name};max-age=${time}`;
+    document.cookie = `${name}_ID=${name};max-age=${time}`; // expire 대신 max-age를 사용했다.
 }
 function deleteCookie(name) // 쿠키를 삭제하는 함수
 {
-    document.cookie = `${name};max-age=-1`;
+    document.cookie = `${name};max-age=-1`; // max-age를 음수로 준다.
 }
-function DataManagement() // 모든 스토리지, 쿠키에 데이터 저장
+function saveData() // 모든 스토리지, 쿠키에 데이터 저장
 {
     setCookie(inputId.value);
     localStorage.setItem(`${inputId.value}_ID`,inputId.value);
@@ -35,58 +35,84 @@ function DataManagement() // 모든 스토리지, 쿠키에 데이터 저장
 }
 function cleanData() // 모든 스토리지, 쿠키 삭제
 {
-  console.log(cookie)
-  localStorage.clear();
-  sessionStorage.clear();
-  for(let i=0;i<cookie.length;i++)
+  if(LoginState==1) // 로그인 상태일 때 동작
   {
-    deleteCookie(cookie[i]);
-  }
-  console.log(cookie)
-}
-function unabled(id){
-  alert(`잘못된 비밀번호를 5회 이상 입력하여 로그인이 제한됩니다. 1시간 후 다시 시도하세요.`);
-  blockSignIn(id);
-  inputId.value = "";
-  inputPw.value = "";
-  LoginCount=0;
-}
-function blockSignIn(id){
-    document.cookie = `blockflag=${id}; max-age=60*60;`;
-    for(let i=0;i<cookie.length;i++)
+    localStorage.clear();
+    sessionStorage.clear();
+    for(let i=document.cookie.split('; ').length-1;i>=0;i--)
     {
-      if(cookie[i]==id)
-      {
-        deleteCookie(id);
-      }
+      deleteCookie(document.cookie.split('; ')[i]);
     }
+    LoginState=0;
+  }
 }
-
-SignOutBtn.addEventListener("click",cleanData); // 로그아웃에 이벤트 추가
-SignInBtn.onclick = function LogIn() {
-  DataManagement();  
+function failToLogIn() // 로그인 실패 카운트 및 오류 출력, 플래그 생성
+{
+  saveData();
   if(!inputId.value||!inputPw.value)
+  {
+    if(localStorage.getItem(LoginCount)==null)
     {
-      alert("아이디 또는 비밀번호를 입력해주세요");
-      LoginCount++;
-      if(LoginCount>=5)
-      {
-        unabled(inputId.value);
-      }
+      localStorage.setItem(LoginCount,1);
+      alert(`로그인 오류(${localStorage.getItem(LoginCount)}) 아이디 혹은 비밀번호를 입력하세요.`);
     }
-    else if(inputId.value==currectId&&inputPw.value==cureectPw){
-      alert("로그인에 성공했습니다.");
-      Loginflag=1;  
+    else if(parseInt(localStorage.getItem(LoginCount))<4)
+    {
+      localStorage.setItem(LoginCount,parseInt(localStorage.getItem(LoginCount))+1);
+      alert(`로그인 오류(${localStorage.getItem(LoginCount)}) 아이디 혹은 비밀번호를 입력하세요.`);
     }
-    else {
-      alert("아이디 또는 비밀번호를 확인하세요")
-      LoginCount++;
-      if(LoginCount>=5)
-      {
-        unabled(inputId.value);
-      }
+    else if(parseInt(localStorage.getItem(LoginCount))>=4)
+    {
+      localStorage.setItem(LoginCount,parseInt(localStorage.getItem(LoginCount))+1);
+      alert("잘못된 로그인 정보를 5회 입력하여 로그인이 제한됩니다. 한 시간 후 시도해주세요.");
+      document.cookie = `blockflag=LogInError`;
     }
   }
+  else if(inputId.value!=currectId&&inputPw.value!=currectPw)
+  {
+    if(localStorage.getItem(LoginCount)==null)
+    {
+      localStorage.setItem(LoginCount,1);
+      alert(`로그인 오류(${localStorage.getItem(LoginCount)}) 아이디 혹은 비밀번호를 확인하세요.`);
+    }
+    else if(parseInt(localStorage.getItem(LoginCount))<4)
+    {
+      localStorage.setItem(LoginCount,parseInt(localStorage.getItem(LoginCount))+1);
+      alert(`로그인 오류(${localStorage.getItem(LoginCount)}) 아이디 혹은 비밀번호를 확인하세요.`);
+    }
+    else if(parseInt(localStorage.getItem(LoginCount))>=4)
+    {
+      localStorage.setItem(LoginCount,parseInt(localStorage.getItem(LoginCount))+1);
+      alert("잘못된 로그인 정보를 5회 입력하여 로그인이 제한됩니다. 한 시간 후 시도해주세요.");
+      document.cookie = `blockflag=LogInError`;
+    }
+  }
+}
 
-
-
+function blockSignIn(){
+  for(let i=0;i<document.cookie.split("; ").length;i++) // 플래그 탐색
+  {
+    let checkflag = document.cookie.split("; ")[i];
+    if(checkflag==`blockflag=LogInError`) // 로그인 플래그가 존재하면 경고창을 띄우고 폼 초기화
+    {
+      alert("잠시 후 다시 시도하세요.");
+      inputId.value="";
+      inputPw.value="";
+    }
+  }
+}
+inputId.addEventListener("keyup",blockSignIn);
+inputPw.addEventListener("keyup",blockSignIn);
+SignOutBtn.addEventListener("click",cleanData); // 로그아웃에 이벤트 추가
+SignInBtn.onclick = function LogIn()  // 로그인에 이벤트 추가
+{
+    failToLogIn();
+    if(inputId.value==currectId&&inputPw.value==currectPw){
+      saveData();
+      alert("로그인에 성공했습니다.");
+      inputId.value = "";
+      inputPw.value = "";
+      LoginCount=0;
+      LoginState=1;  
+    }
+  }
