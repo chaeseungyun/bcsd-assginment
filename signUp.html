@@ -105,8 +105,7 @@
     axios.get('https://api.thecatapi.com/v1/images/search?size=full').then((response)=>
       {
         let img = document.getElementById('img');
-        img.src = response.data[0].url;
-        
+        img.src = response.data[0].url;        
       } 	
     ).catch((Error)=>{
       console.log(Error);
