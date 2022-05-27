@@ -5,8 +5,7 @@ const inputPw = document.getElementById('input-password');
 const time = 60*60*72;
 let img = document.getElementById('img');
 
-let LoginState = 0; // 로그인 여부
-const LoginCount=`LoginCount`; // localStorage에 저장할 key값
+const LoginCount = `LoginCount`; // localStorage에 저장할 key값, 로그인 실패 횟수를 카운트
 let currectId = 'a12345';
 let currectPw = 'a12345';
 
@@ -31,11 +30,13 @@ function saveData() // 모든 스토리지, 쿠키에 데이터 저장
 {
     setCookie(inputId.value);
     localStorage.setItem(`${inputId.value}_ID`,inputId.value);
+    localStorage.setItem(`LoginState`,0);
     sessionStorage.setItem(`${inputId.value}_ID`,inputId.value);
+
 }
 function cleanData() // 모든 스토리지, 쿠키 삭제
 {
-  if(LoginState==1) // 로그인 상태일 때 동작
+  if(parseInt(localStorage.getItem('LoginState'))==1) // 로그인 상태일 때 동작
   {
     localStorage.clear();
     sessionStorage.clear();
@@ -113,6 +114,6 @@ SignInBtn.onclick = function LogIn()  // 로그인에 이벤트 추가
       alert("로그인에 성공했습니다.");
       inputId.value = "";
       inputPw.value = "";
-      LoginState=1;  
+      localStorage.setItem('LoginState',1);
     }
   }
