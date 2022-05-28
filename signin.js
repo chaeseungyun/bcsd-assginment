@@ -67,7 +67,7 @@ function failToLogIn() // 로그인 실패 카운트 및 오류 출력, 플래�
     {
       localStorage.setItem(LoginCount,parseInt(localStorage.getItem(LoginCount))+1);
       alert("잘못된 로그인 정보를 5회 입력하여 로그인이 제한됩니다. 한 시간 후 시도해주세요.");
-      document.cookie = `blockflag=LogInError`;
+      document.cookie = `blockflag=LogInError; max-age=3600`;
     }
   }
   else if(inputId.value!=currectId&&inputPw.value!=currectPw)
@@ -86,7 +86,7 @@ function failToLogIn() // 로그인 실패 카운트 및 오류 출력, 플래�
     {
       localStorage.setItem(LoginCount,parseInt(localStorage.getItem(LoginCount))+1);
       alert("잘못된 로그인 정보를 5회 입력하여 로그인이 제한됩니다. 한 시간 후 시도해주세요.");
-      document.cookie = `blockflag=LogInError`;
+      document.cookie = `blockflag=LogInError; max-age=3600`;
     }
   }
 }
